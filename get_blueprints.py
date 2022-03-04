@@ -1,15 +1,14 @@
 import time
-
-start = time.time()
-print("\nStart!\n")
-
 import base64
 from datetime import datetime as dt
 import requests
 import pandas as pd
-from inv_types import df2, inv_names_df
+from inv_types import df2
 from app_info import client_id, app_secret, refresh_token, character_id
 
+
+start = time.time()
+print("\nStart!\n")
 
 # Authorize with SSO refresh token
 user_pass = "{}:{}".format(client_id, app_secret)
@@ -32,6 +31,7 @@ res.raise_for_status()
 data = res.json()
 access_token = data["access_token"]
 
+
 # Authorize with new access token and request the blueprint list
 blueprint_path = ("https://esi.evetech.net/latest/characters/{}/"
                   "blueprints/".format(character_id))
@@ -49,23 +49,23 @@ df.rename(columns={"location_flag": "loc_flag",
                    "location_id": "loc_id",
                    "material_efficiency": "mat_eff",
                    "time_efficiency": "time_eff",
-                   "typeID": "type_id"}, 
+                   "typeID": "type_id"},
           inplace=True)
 df = df.convert_dtypes()
 
 bp_df = pd.merge(df, df2)
 
 bp_df.rename(columns={"groupID": "group_id",
-                   "categoryID": "category_id",
-                   "groupName": "group_name",
-                   "typeName": "type_name",
-                   "marketGroupID": "market_group_id"},
+                      "categoryID": "category_id",
+                      "groupName": "group_name",
+                      "typeName": "type_name",
+                      "marketGroupID": "market_group_id"},
              inplace=True)
 
-bp_df = bp_df.drop(["group_id", "category_id", "type_id", "market_group_id"], 
+bp_df = bp_df.drop(["group_id", "category_id", "type_id", "market_group_id"],
                    axis='columns')
 
-bp_df = bp_df[["loc_flag", "loc_id", "type_name", "quantity", "mat_eff", 
+bp_df = bp_df[["loc_flag", "loc_id", "type_name", "quantity", "mat_eff",
                "time_eff", "runs", "group_name"]]
 
 bp_df["quantity"].replace({-1: "Original",
@@ -82,12 +82,6 @@ bp_df["type_name"] = bp_df["type_name"].map(lambda x: x.rstrip("Blueprint"))
 bp_df["type_name"] = bp_df["type_name"].map(lambda x: x.rstrip("Formula"))
 
 bp_df = bp_df.convert_dtypes()
-
-# print(f"\nPrinting bp_df:\n{bp_df}")
-
-# df3 = pd.merge(bp_df, inv_names_df)
-# print(f"\nPrinting df3.info:\n{df3}")
-
 
 # Write the blueprint list into a new Excel sheet with current date & time as the sheet name
 now = dt.now()
