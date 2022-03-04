@@ -35,7 +35,6 @@ def group_ids():
 group_ids_df = group_ids()
 # print(f"\nPrinting group_ids_df:\n{group_ids_df}")
 
-
 df2 = pd.merge(group_ids_df, inv_types_df)
 # print(f"\nPrinting df2:\n{df2}")
 
@@ -51,3 +50,18 @@ def inv_names():
     
 inv_names_df = inv_names()
 # print(f"\nPrinting inv_names_df:\n{inv_names_df}")
+
+
+# def market_group_ids():
+#     df = pd.read_csv('invMarketGroups.csv')    
+#     df = df.drop(["parentGroupID", "description", "iconID", "hasTypes"],
+#                  axis='columns')
+#     df.rename(columns={"marketGroupID": "market_group_id", 
+#                        "marketGroupName": "market_group"},
+#               inplace=True)
+#     df = df.reset_index(drop=True)
+#     df = df.convert_dtypes() 
+#     return df
+
+# market_groups_df = market_group_ids()
+# print(f"\nPrinting market_groups_df:\n{market_groups_df}")

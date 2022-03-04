@@ -43,7 +43,6 @@ bp_res.raise_for_status()
 # Retrieve the blueprint list, convert to pandas DataFrame, clean up
 blueprints = bp_res.json()
 
-
 df = pd.DataFrame(blueprints)
 df = df.drop("item_id", axis='columns')
 df.rename(columns={"location_flag": "loc_flag",
@@ -63,9 +62,11 @@ bp_df.rename(columns={"groupID": "group_id",
                    "marketGroupID": "market_group_id"},
              inplace=True)
 
-bp_df = bp_df.drop(["group_id", "category_id", "type_id"], axis='columns')
-bp_df = bp_df[["loc_flag", "loc_id", "quantity", "runs", "mat_eff", "time_eff",
-               "type_name", "group_name", "market_group_id"]]
+bp_df = bp_df.drop(["group_id", "category_id", "type_id", "market_group_id"], 
+                   axis='columns')
+
+bp_df = bp_df[["loc_flag", "loc_id", "type_name", "quantity", "mat_eff", 
+               "time_eff", "runs", "group_name"]]
 
 bp_df["quantity"].replace({-1: "Original",
                            -2: "Copy"},
@@ -84,7 +85,6 @@ bp_df = bp_df.convert_dtypes()
 
 # print(f"\nPrinting bp_df:\n{bp_df}")
 
-
 # df3 = pd.merge(bp_df, inv_names_df)
 # print(f"\nPrinting df3.info:\n{df3}")
 
@@ -98,7 +98,7 @@ with pd.ExcelWriter('blueprints.xlsx', mode='a') as writer:
 
 
 end = time.time()
-print("Stop!\n")
+print("Stop!")
 
 counter = end - start
 counter = round(counter, 2)
