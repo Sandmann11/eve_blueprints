@@ -52,6 +52,8 @@ inv_names_df = inv_names()
 # print(f"\nPrinting inv_names_df:\n{inv_names_df}")
 
 
+
+
 # def market_group_ids():
 #     df = pd.read_csv('invMarketGroups.csv')    
 #     df = df.drop(["parentGroupID", "description", "iconID", "hasTypes"],
