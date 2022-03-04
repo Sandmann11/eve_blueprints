@@ -3,5 +3,6 @@ esi_oauth_native.py
 esi_oauth_web.py
 revoke_refresh_token.py
 validate_jwt.py
+shared_flow.py
 /venv
 /__pycache__
