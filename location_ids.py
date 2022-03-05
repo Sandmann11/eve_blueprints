@@ -1,9 +1,10 @@
 import time
 import pandas as pd
 
+
 # Operation time measurement start
 start = time.time()
-print("\nStart!\n")
+print(f"\nStart!\n")
 
 
 # Scraping the lists of structures and their IDs and names
@@ -19,17 +20,22 @@ dfs = pd.read_html(url)
 #     print(idx)
 #     print(table)
 
+
 str_df = dfs[5]
-# print(structures_df)
+str_df = str_df.convert_dtypes()
 
-structures_df = str_df.drop(str_df.index[0])
+# col_names = ["str_id", "str_name"]
 
-structures_df.to_csv('game_data/structures.csv')
+str_df.to_csv('game_data/structures.csv', header=["str_id", "str_name"], index=False)
+
+print(str_df.head())
+print(str_df.info())
 
 # Operation time measurement stop
 end = time.time()
-print("Stop!\n")
+print(f"\nStop!\n")
 
 counter = end - start
 counter = round(counter, 2)
-print(f"Operation complete\n\nTime elapsed: {counter} s\n\n")
+
+print(f"Operation complete.\nTime elapsed: {counter} s\n\n")
