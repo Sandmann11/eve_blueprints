@@ -3,7 +3,7 @@ import base64
 from datetime import datetime as dt
 import requests
 import pandas as pd
-from inv_types import df2
+from inv_types import df2, locations_df
 from app_info import client_id, app_secret, refresh_token, character_id
 
 
@@ -83,13 +83,28 @@ bp_df["type_name"] = bp_df["type_name"].map(lambda x: x.rstrip("Blueprint"))
 bp_df["type_name"] = bp_df["type_name"].map(lambda x: x.rstrip("Formula"))
 
 bp_df = bp_df.convert_dtypes()
+print(f"\nPrinting bp_df:\n{bp_df}\n")
+print(bp_df.info())
+
+
+loc_df = pd.read_csv('game_data/locations.csv')
+print(f"\nPrinting loc_df:\n{loc_df}\n")
+# loc_df = loc_df.reset_index(drop=True)
+print(loc_df.info())
+
+blueprints_df = pd.merge(bp_df, loc_df, on="loc_id")
+# blueprints_df = blueprints_df.reset_index(drop=True)
+blueprints_df = blueprints_df.convert_dtypes()
+
+print(f"\nPrinting blueprints_df:\n{blueprints_df}\n")
+print(blueprints_df.info())
 
 # Write the blueprint list into a new Excel sheet with current date & time as the sheet name
-now = dt.now()
-sheet_name = now.strftime("%Y.%m.%d - %H.%M.%S")
+# now = dt.now()
+# sheet_name = now.strftime("%Y.%m.%d - %H.%M.%S")
 
-with pd.ExcelWriter('blueprints.xlsx', mode='a') as writer:
-    bp_df.to_excel(writer, sheet_name=sheet_name)
+# with pd.ExcelWriter('blueprints.xlsx', mode='a') as writer:
+#     bp_df.to_excel(writer, sheet_name=sheet_name)
 
 
 end = time.time()

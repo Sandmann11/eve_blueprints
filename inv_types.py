@@ -39,22 +39,52 @@ def group_ids():
 group_ids_df = group_ids()
 # print(f"\nPrinting group_ids_df:\n{group_ids_df}")
 
-
 df2 = pd.merge(group_ids_df, inv_types_df)
 # print(f"\nPrinting df2:\n{df2}")
 
 
-def inv_names():
-    df = pd.read_csv('game_data/invNames.csv')
-    df.rename(columns={"itemID": "loc_id",
-                       "itemName": "loc_name"},
-              inplace=True)
+def station_ids():
+    df = pd.read_csv('game_data/stations.csv')
+    df = df.reset_index(drop=True)
+    # df = df.convert_dtypes()
+    return df
 
-    df = df.convert_dtypes()
+stations_df = station_ids()
+# print(f"\nPrinting stations_df:\n{stations_df}")
+
+
+def structure_ids():
+    df = pd.read_csv('game_data/structures.csv')
+    df = df.reset_index(drop=True)
+    # df = df.convert_dtypes()
     return df
 
 
-inv_names_df = inv_names()
+structures_df = structure_ids()
+# print(f"\nPrinting structures_df:\n{structures_df}")
+
+locations_df = stations_df.append(structures_df, ignore_index=True)
+locations_df = locations_df.astype({'loc_id': 'int64', 
+                                    'loc_name': 'string'})
+# locations_df = locations_df.reset_index(drop=True)
+
+locations_df.to_csv('game_data/locations.csv', index=False)
+
+print(f"\nPrinting locations_df:\n{locations_df}\n")
+print(locations_df.info())
+
+
+# def inv_names():
+#     df = pd.read_csv('game_data/invNames.csv')
+#     df.rename(columns={"itemID": "loc_id",
+#                        "itemName": "loc_name"},
+#               inplace=True)
+
+#     df = df.convert_dtypes()
+#     return df
+
+
+# inv_names_df = inv_names()
 
 # print(f"\nPrinting inv_names_df:\n{inv_names_df}")
 
