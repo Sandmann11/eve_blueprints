@@ -40,6 +40,7 @@ bp_headers = {"Authorization": "Bearer {}".format(access_token)}
 bp_res = requests.get(blueprint_path, headers=bp_headers)
 bp_res.raise_for_status()
 
+
 # Retrieve the blueprint list, convert to pandas DataFrame, clean up
 blueprints = bp_res.json()
 
