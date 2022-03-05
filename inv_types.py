@@ -63,7 +63,8 @@ def structure_ids():
 structures_df = structure_ids()
 # print(f"\nPrinting structures_df:\n{structures_df}")
 
-locations_df = stations_df.append(structures_df, ignore_index=True)
+# USE CONCAT!!!
+locations_df = stations_df.append(structures_df)
 locations_df = locations_df.astype({'loc_id': 'int64', 
                                     'loc_name': 'string'})
 # locations_df = locations_df.reset_index(drop=True)

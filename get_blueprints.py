@@ -92,7 +92,7 @@ print(f"\nPrinting loc_df:\n{loc_df}\n")
 # loc_df = loc_df.reset_index(drop=True)
 print(loc_df.info())
 
-blueprints_df = pd.merge(bp_df, loc_df, on="loc_id")
+blueprints_df = pd.merge(loc_df, bp_df, how='right')
 # blueprints_df = blueprints_df.reset_index(drop=True)
 blueprints_df = blueprints_df.convert_dtypes()
 
