@@ -17,7 +17,6 @@ def inv_types():
     df = df.convert_dtypes()
     return df
 
-
 inv_types_df = inv_types()
 # print(f"\nPrinting inv_types_df:\n{inv_types_df}")
 
@@ -34,7 +33,6 @@ def group_ids():
     df = df.reset_index(drop=True)
     df = df.convert_dtypes()
     return df
-
 
 group_ids_df = group_ids()
 # print(f"\nPrinting group_ids_df:\n{group_ids_df}")
@@ -71,8 +69,8 @@ locations_df = locations_df.astype({'loc_id': 'int64',
 
 locations_df.to_csv('game_data/locations.csv', index=False)
 
-print(f"\nPrinting locations_df:\n{locations_df}\n")
-print(locations_df.info())
+# print(f"\nPrinting locations_df:\n{locations_df}\n")
+# print(locations_df.info())
 
 
 # def inv_names():
